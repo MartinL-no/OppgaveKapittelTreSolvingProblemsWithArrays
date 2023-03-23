@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace OppgaveKapittelTreSolvingProblemsWithArrays;
 class Program
@@ -10,51 +11,55 @@ class Program
          */
         var sortedArray = new int[] { 1, 2, 3 };
         var unSortedArray = new int[] { 16, 222, 3, 44 };
-        var arrayIsSorted = OppgaveTre(unSortedArray, 3);
+        var arrayIsSorted = Sorter.IsSorted(unSortedArray, 3);
 
         Console.WriteLine("Sorting exercise:");
-        Console.WriteLine($"int[] {{ 1, 2, 3 }} is a sorted array = {OppgaveTre(sortedArray,3)}");
-        Console.WriteLine($"int[] {{ 16, 222, 3, 44 }} is a sorted array = {OppgaveTre(unSortedArray, 4)}");
+        Console.WriteLine($"int[] {{ 1, 2, 3 }} is a sorted array = {Sorter.IsSorted(sortedArray,3)}");
+        Console.WriteLine($"int[] {{ 16, 222, 3, 44 }} is a sorted array = {Sorter.IsSorted(unSortedArray, 4)}");
         Console.WriteLine();
 
         /*
          * Oppgave 3-4 & 3-5
          */
-        var UserCipher = new Cipher("IJVWXKLMNOPABCDYZEFGHQRSTU");
+        var userCipher = new Cipher("IJVWXKLMNOPABCDYZEFGHQRSTU");
 
         Console.WriteLine("Cipher exercises:");
-        Console.WriteLine($"The encryption of GETACADEMY is: {UserCipher.Encrypt("GETACADEMY")}");
-        Console.WriteLine($"The decryption of LXGIVIWXBT is: {UserCipher.Decrypt("LXGIVIWXBT")}");
+        Console.WriteLine($"The encryption of GETACADEMY is: {userCipher.Encrypt("GETACADEMY")}");
+        Console.WriteLine($"The decryption of LXGIVIWXBT is: {userCipher.Decrypt("LXGIVIWXBT")}");
+
         /*
          * Oppgave 3-6
          */
-        var RandomizedCipherOne = new Cipher();
-        var RandomizedCipherTwo = new Cipher();
-        Console.WriteLine($"First randomized cipher of GETACADEMY: {RandomizedCipherOne.Encrypt("GETACADEMY")}");
-        Console.WriteLine($"Second randomized cipher of GETACADEMY: {RandomizedCipherTwo.Encrypt("GETACADEMY")}");
-    }
-    
-    static bool OppgaveTre(int[] array, int numberOfElements)
-    {
+        var randomizedCipherOne = new Cipher();
+        var randomizedCipherTwo = new Cipher();
+        Console.WriteLine($"First randomized cipher of GETACADEMY: {randomizedCipherOne.Encrypt("GETACADEMY")}");
+        Console.WriteLine($"Second randomized cipher of GETACADEMY: {randomizedCipherTwo.Encrypt("GETACADEMY")}");
+        Console.WriteLine();
+
         /*
-         * 3-3 Write a bool function that is passed an array and the number of elements in
-         * that array and determines whether the data in the array is sorted. This should
-         * require only one pass!
+         * Oppgave 3-7
          */
+        Console.WriteLine("Mode Exercise:");
+        Mode(new int[] { 2, 5, 7, 4, 2, 4, 2, 2,4,4,4,4,4 });
+    }
+    static void Mode(int[] intArray)
+    {
+        var maxIndex = intArray.Max(x => x) + 1;
+        var amountOfEachNumbersArray = new int[maxIndex];
+        int mode = 0;
+        int maxInstances = 0;
 
-        int start = 0;
-        int end = numberOfElements - 1;
-        for (int i = start + 1; i <= end; i++)
+        foreach (var number in intArray)
         {
-            for (int j = i; j > start && array[j - 1] > array[j]; j--)
-            {
-                int temp = array[j - 1];
-                array[j - 1] = array[j];
-                array[j] = temp;
+            amountOfEachNumbersArray[number]++;
 
-                return false;
+            if (amountOfEachNumbersArray[number] > maxInstances)
+            {
+                mode = number;
+                maxInstances = amountOfEachNumbersArray[number];
             }
         }
-        return true;
+
+        Console.WriteLine($"The mode is {mode}");
     }
 }
